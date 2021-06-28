@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    image: $LOCAL_IMAGE_ID
+    volumes:
+      - $WORKSPACE/tests/unit-tests/:/tests/unit-tests/
+
+    tty: true
+    
+    command: ["bash", "-c", "/tests/unit-tests/unit-tests.sh"]
+
