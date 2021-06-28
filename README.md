@@ -1,4 +1,4 @@
-# KTH Alpine Linux 3.13
+# KTH Alpine Linux 3.13 ![Continous Integration](https://github.com/KTH/kth-os-3.13/actions/workflows/main.yml/badge.svg)
 
 ## What version does you image use?
 
