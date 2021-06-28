@@ -43,7 +43,7 @@ expectToContain "/KTH_OS" "Alpine version: 3.13" "/KTH_OS should contain the Alp
 
 # Result
 if [[ "$FAILED" != *"true"* ]]; then
-    info "All end-to-end tests passed."
+    info "🎉🎉🎉 All unit tests passed."
     exit 0
 else
     echo ""
