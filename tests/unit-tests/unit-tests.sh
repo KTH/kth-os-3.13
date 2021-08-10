@@ -7,9 +7,9 @@ passed() { printf "\033[0;32m • $@\033[0;0m\n"; }
 FAILED=""
 
 #
-# /KTH_PYTHON should contain a pattern or show infor
+# /KTH_OS should contain a pattern or show infor
 #
-# Usage: expectToContain "Build date" "No build date pressent in /KTH_PYTHON"
+# Usage: expectToContain "Build date" "No build date pressent in /KTH_OS"
 #
 expectToContain() {
     FILE=$(cat /$1)
@@ -20,14 +20,41 @@ expectToContain() {
         if [ ! -z "$FAILURE_INFO" ]; then
             passed "$FAILURE_INFO."
         else 
-            passed "/KTH_PYTHON contains $PATTERN"
+            passed "/KTH_OS contains $PATTERN"
         fi
  
     else
         if [ ! -z "$FAILURE_INFO" ]; then
             error "$FAILURE_INFO"
         fi
-        info "/KTH_PYTHON does not contain pattern '$PATTERN'."
+        info "/KTH_OS does not contain pattern '$PATTERN'."
+        
+        FAILED="true"
+    fi
+
+}
+
+
+#
+# Usage: expectToHave "/bin/bash" "Should have Bash installed."
+#
+expectToHave() {
+    CMD_OUTPUT=$($1)
+    PATTERN="$2"
+    FAILURE_INFO="$3"
+    
+    if [[ "$CMD_OUTPUT" == *"$PATTERN"* ]]; then
+        if [ ! -z "$FAILURE_INFO" ]; then
+            passed "$FAILURE_INFO."
+        else             
+            passed "Command contains $PATTERN"
+        fi
+ 
+    else
+        if [ ! -z "$FAILURE_INFO" ]; then
+            error "$FAILURE_INFO"
+        fi
+            error "Command output did not contain $PATTERN"
         
         FAILED="true"
     fi
@@ -39,7 +66,7 @@ expectToContain() {
 echo ""
 echo "OS"
 expectToContain "/KTH_OS" "Build date:" "/KTH_OS should contain the date when the images was built."
-expectToContain "/KTH_OS" "Alpine version: 3.13" "/KTH_OS should contain the Alpine version."
+expectToHave "/bin/bash --version" "GNU bash" "Should have Bash shell installed."
 
 # Result
 if [[ "$FAILED" != *"true"* ]]; then
